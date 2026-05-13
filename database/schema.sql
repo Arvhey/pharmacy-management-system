@@ -107,13 +107,20 @@ CREATE POLICY "Users can update own profile"
   ON public.users FOR UPDATE
   USING (auth.uid() = id);
 
+-- Function to get user role bypassing RLS to avoid infinite recursion
+CREATE OR REPLACE FUNCTION public.get_user_role()
+RETURNS TEXT
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT role FROM public.users WHERE id = auth.uid();
+$$;
+
 CREATE POLICY "Admins can view all users"
   ON public.users FOR SELECT
   USING (
-    EXISTS (
-      SELECT 1 FROM public.users u
-      WHERE u.id = auth.uid() AND u.role = 'admin'
-    )
+    public.get_user_role() = 'admin'
   );
 
 -- Medicines table policies
