@@ -11,6 +11,8 @@ const NAV_ITEMS = [
   { to: '/reports',         icon: BarChart2,        label: 'Reports'          },
 ]
 
+
+
 const BOTTOM_ITEMS = [
   { to: '/profile',  icon: User,     label: 'Profile'  },
   { to: '/settings', icon: Settings, label: 'Settings' },

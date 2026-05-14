@@ -50,7 +50,7 @@ export default function UserProfile({ compact = false }) {
     <div className="relative" ref={menuRef}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-3 focus:outline-none hover:opacity-80 transition-opacity"
+        className="flex items-center gap-3 focus:outline-none hover:opacity-80 transition-opacity lg:pointer-events-none lg:hover:opacity-100"
       >
         <div className="text-right hidden sm:block">
           <p className="text-sm font-medium text-dark-100 leading-tight">{displayName}</p>
@@ -62,7 +62,7 @@ export default function UserProfile({ compact = false }) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-dark-800 border border-dark-700 rounded-xl shadow-card overflow-hidden z-50 animate-slide-up">
+        <div className="absolute right-0 mt-2 w-48 bg-dark-800 border border-dark-700 rounded-xl shadow-card overflow-hidden z-50 animate-slide-up lg:hidden">
           <div className="p-3 border-b border-dark-700 sm:hidden">
             <p className="text-sm font-medium text-dark-100 leading-tight truncate">{displayName}</p>
             <p className="text-xs text-dark-400 truncate">{USER_ROLES[role]?.label || role}</p>

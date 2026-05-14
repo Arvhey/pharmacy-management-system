@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Light mode (inverted) */
+  --color-dark-50: 15 23 42;
+  --color-dark-100: 30 41 59;
+  --color-dark-200: 51 65 85;
+  --color-dark-300: 71 85 105;
+  --color-dark-400: 100 116 139;
+  --color-dark-500: 148 163 184;
+  --color-dark-600: 203 213 225;
+  --color-dark-700: 226 232 240;
+  --color-dark-800: 241 245 249;
+  --color-dark-900: 248 250 252;
+  --color-dark-950: 255 255 255;
+}
+
+.dark {
+  /* Dark mode */
+  --color-dark-50: 248 250 252;
+  --color-dark-100: 241 245 249;
+  --color-dark-200: 226 232 240;
+  --color-dark-300: 203 213 225;
+  --color-dark-400: 148 163 184;
+  --color-dark-500: 100 116 139;
+  --color-dark-600: 71 85 105;
+  --color-dark-700: 51 65 85;
+  --color-dark-800: 30 41 59;
+  --color-dark-900: 15 23 42;
+  --color-dark-950: 2 6 23;
+}
+
 @layer base {
   * {
     @apply border-dark-700;
@@ -67,19 +97,19 @@
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
   .badge-success {
-    @apply badge bg-emerald-900/50 text-emerald-400 border border-emerald-800/50;
+    @apply badge bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-400 dark:border-emerald-800/50;
   }
   .badge-warning {
-    @apply badge bg-amber-900/50 text-amber-400 border border-amber-800/50;
+    @apply badge bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-900/50 dark:text-amber-400 dark:border-amber-800/50;
   }
   .badge-danger {
-    @apply badge bg-red-900/50 text-red-400 border border-red-800/50;
+    @apply badge bg-red-100 text-red-800 border border-red-200 dark:bg-red-900/50 dark:text-red-400 dark:border-red-800/50;
   }
   .badge-info {
-    @apply badge bg-sky-900/50 text-sky-400 border border-sky-800/50;
+    @apply badge bg-sky-100 text-sky-800 border border-sky-200 dark:bg-sky-900/50 dark:text-sky-400 dark:border-sky-800/50;
   }
   .badge-muted {
-    @apply badge bg-dark-700 text-dark-400 border border-dark-600;
+    @apply badge bg-slate-100 text-slate-600 border border-slate-200 dark:bg-dark-700 dark:text-dark-400 dark:border-dark-600;
   }
   .stat-card {
     @apply glass-card p-5 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5;
@@ -107,7 +137,7 @@
            hover:bg-dark-700/50 transition-all duration-200 font-medium text-sm;
   }
   .sidebar-link.active {
-    @apply bg-primary-600/20 text-primary-400 border border-primary-500/20;
+    @apply bg-primary-50 text-primary-700 border border-primary-200 dark:bg-primary-600/20 dark:text-primary-400 dark:border-primary-500/20;
   }
   .page-title {
     @apply text-2xl font-bold text-dark-50;

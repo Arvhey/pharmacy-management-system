@@ -2,7 +2,8 @@ import { Menu, Bell, Sun, Moon, Search } from 'lucide-react'
 import { useSidebar } from '../../context/SidebarContext'
 import { useTheme }   from '../../context/ThemeContext'
 import UserProfile     from './UserProfile'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useReports }  from '../../hooks/useReports'
 
 const PAGE_TITLES = {
   '/':                { title: 'Dashboard',       sub: 'Overview of your pharmacy' },
@@ -17,7 +18,11 @@ export default function Navbar() {
   const { toggle: toggleSidebar } = useSidebar()
   const { isDark, toggleTheme }                  = useTheme()
   const location                                 = useLocation()
+  const navigate                                 = useNavigate()
+  const { dashboardStats }                       = useReports()
   const page = PAGE_TITLES[location.pathname] || { title: 'PharmaCare', sub: '' }
+
+  const hasAlerts = dashboardStats?.lowStockCount > 0 || dashboardStats?.expiringSoon > 0
 
   return (
     <header className="relative z-50 h-16 flex items-center justify-between px-4 lg:px-6 bg-dark-800/60 backdrop-blur-md border-b border-dark-700/50 shrink-0 gap-4">
@@ -46,11 +51,14 @@ export default function Navbar() {
         {/* Notifications */}
         <button
           id="notifications-btn"
+          onClick={() => navigate('/inventory')}
           className="relative p-2 rounded-lg text-dark-400 hover:text-dark-100 hover:bg-dark-700 transition-colors"
-          title="Notifications"
+          title={hasAlerts ? "You have pending stock alerts" : "Notifications"}
         >
           <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-dark-800" />
+          {hasAlerts && (
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-dark-800 animate-pulse" />
+          )}
         </button>
 
         {/* Separator */}
