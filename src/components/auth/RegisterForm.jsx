@@ -4,7 +4,7 @@ import { Eye, EyeOff, Mail, Lock, User, UserPlus } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
-export default function RegisterForm() {
+export default function RegisterForm({ onClose, isModal }) {
   const { signUp } = useAuth()
   const navigate   = useNavigate()
   const [form,     setForm]     = useState({ fullName: '', email: '', password: '', confirmPassword: '', role: 'staff' })
@@ -34,7 +34,7 @@ export default function RegisterForm() {
     try {
       await signUp(form.email, form.password, form.fullName, form.role)
       toast.success('Account created! Please check your email to verify.')
-      navigate('/login')
+      if (onClose) onClose()
     } catch (err) {
       toast.error(err.message || 'Registration failed')
     } finally {
@@ -57,9 +57,13 @@ export default function RegisterForm() {
   )
 
   return (
-    <div className="glass-card p-8">
-      <h2 className="text-xl font-bold text-dark-50 mb-1">Create Account</h2>
-      <p className="text-dark-400 text-sm mb-6">Register a new pharmacy staff account</p>
+    <div className={isModal ? "" : "glass-card p-8"}>
+      {!isModal && (
+        <>
+          <h2 className="text-xl font-bold text-dark-50 mb-1">Create Account</h2>
+          <p className="text-dark-400 text-sm mb-6">Register a new pharmacy staff account</p>
+        </>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Full Name */}
@@ -111,11 +115,6 @@ export default function RegisterForm() {
           {loading ? 'Creating account...' : 'Create Account'}
         </button>
       </form>
-
-      <p className="text-center text-dark-400 text-sm mt-6">
-        Already have an account?{' '}
-        <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">Sign In</Link>
-      </p>
     </div>
   )
 }

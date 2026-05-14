@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
+import Modal from '../ui/Modal'
+import RegisterForm from './RegisterForm'
 
 export default function LoginForm() {
   const { signIn } = useAuth()
@@ -11,6 +13,7 @@ export default function LoginForm() {
   const [errors,   setErrors]   = useState({})
   const [loading,  setLoading]  = useState(false)
   const [showPass, setShowPass] = useState(false)
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
 
   function validate() {
     const e = {}
@@ -30,21 +33,6 @@ export default function LoginForm() {
       navigate('/')
     } catch (err) {
       toast.error(err.message || 'Invalid credentials')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Demo quick-login
-  async function demoLogin() {
-    setLoading(true)
-    try {
-      await signIn('admin@pharmacare.com', 'password123')
-      toast.success('Demo login successful!')
-      navigate('/')
-    } catch {
-      // In demo mode with dummy data, bypass auth
-      navigate('/')
     } finally {
       setLoading(false)
     }
@@ -101,24 +89,24 @@ export default function LoginForm() {
         </button>
       </form>
 
-      {/* Demo login */}
-      <div className="mt-4">
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-dark-700" /></div>
-          <div className="relative flex justify-center text-xs text-dark-500 bg-dark-800 px-2 mx-auto w-fit">or</div>
-        </div>
-        <button id="demo-login" onClick={demoLogin} disabled={loading}
-          className="btn-secondary w-full justify-center py-2.5 text-sm">
-          🚀 Continue with Demo Account
-        </button>
-      </div>
-
       <p className="text-center text-dark-400 text-sm mt-6">
         Don't have an account?{' '}
-        <Link to="/register" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
+        <button
+          onClick={() => setIsRegisterModalOpen(true)}
+          className="text-primary-400 hover:text-primary-300 font-medium transition-colors"
+        >
           Register
-        </Link>
+        </button>
       </p>
+
+      <Modal
+        isOpen={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
+        title="Create Account"
+        size="lg"
+      >
+        <RegisterForm onClose={() => setIsRegisterModalOpen(false)} isModal={true} />
+      </Modal>
     </div>
   )
 }
