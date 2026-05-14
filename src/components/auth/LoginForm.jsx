@@ -103,7 +103,7 @@ export default function LoginForm() {
         isOpen={isRegisterModalOpen}
         onClose={() => setIsRegisterModalOpen(false)}
         title="Create Account"
-        size="lg"
+        size="md"
       >
         <RegisterForm onClose={() => setIsRegisterModalOpen(false)} isModal={true} />
       </Modal>
