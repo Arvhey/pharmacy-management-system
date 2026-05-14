@@ -14,23 +14,16 @@ const PAGE_TITLES = {
 }
 
 export default function Navbar() {
-  const { toggle: toggleSidebar, toggleMobile } = useSidebar()
+  const { toggle: toggleSidebar } = useSidebar()
   const { isDark, toggleTheme }                  = useTheme()
   const location                                 = useLocation()
   const page = PAGE_TITLES[location.pathname] || { title: 'PharmaCare', sub: '' }
 
   return (
-    <header className="h-16 flex items-center justify-between px-4 lg:px-6 bg-dark-800/60 backdrop-blur-md border-b border-dark-700/50 shrink-0 gap-4">
+    <header className="relative z-50 h-16 flex items-center justify-between px-4 lg:px-6 bg-dark-800/60 backdrop-blur-md border-b border-dark-700/50 shrink-0 gap-4">
       {/* Left: menu + title */}
       <div className="flex items-center gap-3 min-w-0">
-        {/* Mobile hamburger */}
-        <button
-          id="mobile-menu-toggle"
-          onClick={toggleMobile}
-          className="lg:hidden p-2 rounded-lg text-dark-400 hover:text-dark-100 hover:bg-dark-700 transition-colors"
-        >
-          <Menu size={20} />
-        </button>
+
 
         <div className="min-w-0">
           <h1 className="text-base font-bold text-dark-50 leading-tight truncate">{page.title}</h1>
